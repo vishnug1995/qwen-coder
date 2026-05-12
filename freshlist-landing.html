@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshlist - Your Smart Grocery Companion</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --color-sand: #FDFCF8;
+            --color-warm-white: #FAF9F6;
+            --color-green-light: #E8F5E9;
+            --color-green-medium: #4CAF50;
+            --color-green-dark: #2E7D32;
+            --color-earth: #8D6E63;
+            --color-text-primary: #1A1A1A;
+            --color-text-secondary: #666666;
+            --color-border: #E5E5E5;
+            
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --border-radius-xl: 30px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-sand);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(253, 252, 248, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid rgba(229, 229, 229, 0.3);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-green-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-green-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: calc(var(--spacing-xl) * 2) 0 var(--spacing-xl);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-warm-white) 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text-primary);
+        }
+
+        .hero-text .tagline {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-md);
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: var(--color-green-dark);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-xl);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--color-green-medium);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .hero-mockup {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 8px solid var(--color-text-primary);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .mockup-screen {
+            padding: var(--spacing-md);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mockup-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-green-dark);
+        }
+
+        .mockup-list {
+            flex: 1;
+        }
+
+        .mockup-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            background: var(--color-green-light);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+        }
+
+        .mockup-item.checked {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .mockup-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--color-green-medium);
+            border-radius: 4px;
+            margin-right: var(--spacing-xs);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mockup-item.checked .mockup-checkbox {
+            background: var(--color-green-medium);
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: var(--spacing-xl) 0;
+            background: var(--color-warm-white);
+        }
+
+        .problem-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .problem h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+        }
+
+        .problem p {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+
+        .problem-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .stat-card {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--color-green-dark);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: var(--spacing-xl) 0;
+            background: var(--color-sand);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-header p {
+            color: var(--color-text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .feature-card {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-border);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--color-green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+            color: var(--color-green-dark);
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .feature-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: var(--spacing-xl) 0;
+            background: var(--color-warm-white);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--color-green-dark);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        .step h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .step p {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .step-visual {
+            margin-top: var(--spacing-sm);
+            height: 200px;
+            background: white;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: var(--spacing-xl) 0;
+            background: var(--color-sand);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--color-green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-green-dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        /* Download CTA */
+        .download-cta {
+            padding: var(--spacing-xl) 0;
+            background: linear-gradient(135deg, var(--color-green-dark) 0%, var(--color-green-medium) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .download-cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .download-cta p {
+            font-size: 1.125rem;
+            margin-bottom: var(--spacing-md);
+            opacity: 0.9;
+        }
+
+        .store-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .store-button {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: white;
+            color: var(--color-text-primary);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .store-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text-primary);
+            color: white;
+            padding: var(--spacing-lg) 0 var(--spacing-md);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-brand h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-brand p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-sm);
+            opacity: 0.7;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                order: 1;
+            }
+
+            .hero-mockup {
+                order: 2;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+
+            .store-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <i data-lucide="leaf"></i>
+                Freshlist
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text fade-in">
+                <h1>Grocery Shopping,<br>Reimagined</h1>
+                <p class="tagline">The smart, minimal grocery list that helps you shop faster, waste less, and never forget the essentials again.</p>
+                <a href="#download" class="cta-button">
+                    <i data-lucide="download"></i>
+                    Download Free
+                </a>
+            </div>
+            <div class="hero-mockup fade-in">
+                <div class="phone-mockup">
+                    <div class="mockup-screen">
+                        <div class="mockup-header">
+                            <span class="mockup-title">Freshlist</span>
+                            <i data-lucide="plus-circle" style="color: var(--color-green-dark);"></i>
+                        </div>
+                        <div class="mockup-list">
+                            <div class="mockup-item">
+                                <div class="mockup-checkbox"></div>
+                                <span>Organic Bananas</span>
+                            </div>
+                            <div class="mockup-item checked">
+                                <div class="mockup-checkbox">✓</div>
+                                <span>Whole Milk</span>
+                            </div>
+                            <div class="mockup-item">
+                                <div class="mockup-checkbox"></div>
+                                <span>Sourdough Bread</span>
+                            </div>
+                            <div class="mockup-item">
+                                <div class="mockup-checkbox"></div>
+                                <span>Free-Range Eggs</span>
+                            </div>
+                            <div class="mockup-item checked">
+                                <div class="mockup-checkbox">✓</div>
+                                <span>Avocados</span>
+                            </div>
+                            <div class="mockup-item">
+                                <div class="mockup-checkbox"></div>
+                                <span>Greek Yogurt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container problem-content fade-in">
+            <h2>Sound Familiar?</h2>
+            <p>You're standing in the grocery store aisle, mentally scrolling through your fridge contents. Did you buy milk already? What was that one ingredient for tonight's recipe? We've all been there — wandering aimlessly, buying duplicates, and forgetting essentials.</p>
+            
+            <div class="problem-stats">
+                <div class="stat-card">
+                    <div class="stat-number">$1,500</div>
+                    <div class="stat-label">Average annual food waste per household</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">23%</div>
+                    <div class="stat-label">Of groceries purchased are never consumed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45min</div>
+                    <div class="stat-label">Average time wasted per shopping trip</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Everything You Need,<br>Nothing You Don't</h2>
+                <p>Freshlist strips away the complexity and gives you exactly what you need for efficient, stress-free grocery shopping.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <h3>Smart Categorization</h3>
+                    <p>Items automatically organize by store section. No more backtracking through aisles — shop in the most efficient route possible.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3>Shared Lists</h3>
+                    <p>Sync instantly with family or roommates. When someone adds or checks off an item, everyone sees it in real-time.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i data-lucide="refresh-cw"></i>
+                    </div>
+                    <h3>One-Tap Reorder</h3>
+                    <p>Buy the same items weekly? Restore your entire list from last time with a single tap. Perfect for routine shopping.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i data-lucide="package"></i>
+                    </div>
+                    <h3>Pantry Sync</h3>
+                    <p>Track what's running low at home. Get gentle reminders before you run out of essentials like coffee or cereal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Three Steps to<br>Smarter Shopping</h2>
+                <p>Getting started with Freshlist is as easy as 1-2-3</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Add Items</h3>
+                    <p>Type, speak, or scan barcodes to add items. Our smart suggestions learn your preferences over time.</p>
+                    <div class="step-visual">
+                        <i data-lucide="type" size="48" style="color: var(--color-green-dark);"></i>
+                    </div>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-number">2</div>
+                    <h3>Organize</h3>
+                    <p>Watch as Freshlist automatically categorizes everything by store layout. Customize categories to match your local store.</p>
+                    <div class="step-visual">
+                        <i data-lucide="list-filter-plus" size="48" style="color: var(--color-green-dark);"></i>
+                    </div>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-number">3</div>
+                    <h3>Shop Smarter</h3>
+                    <p>Follow your optimized list through the store. Check off items as you go and never miss a thing.</p>
+                    <div class="step-visual">
+                        <i data-lucide="shopping-cart" size="48" style="color: var(--color-green-dark);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Loved by Smart Shoppers</h2>
+                <p>Join thousands who've transformed their grocery routine</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">"I used to spend forever wandering around Target. Now I'm in and out in 20 minutes with everything I need. Freshlist has literally changed my weekends."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <span class="author-name">Sarah M.</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">"My husband and I finally stopped buying duplicate groceries. The shared list feature is a game-changer for our household. So simple yet so effective."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JK</div>
+                        <span class="author-name">James K.</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">"As someone with ADHD, remembering what I needed was always a struggle. Freshlist takes the mental load off. I actually enjoy grocery shopping now!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EP</div>
+                        <span class="author-name">Emma P.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA -->
+    <section class="download-cta" id="download">
+        <div class="container fade-in">
+            <h2>Ready to Transform<br>Your Shopping?</h2>
+            <p>Download Freshlist today and join the grocery revolution. Free forever.</p>
+            <div class="store-buttons">
+                <a href="#" class="store-button">
+                    <i data-lucide="apple"></i>
+                    <div>
+                        <div style="font-size: 0.7rem; font-weight: 400;">Download on the</div>
+                        <div style="font-size: 1.1rem;">App Store</div>
+                    </div>
+                </a>
+                <a href="#" class="store-button">
+                    <i data-lucide="play"></i>
+                    <div>
+                        <div style="font-size: 0.7rem; font-weight: 400;">Get it on</div>
+                        <div style="font-size: 1.1rem;">Google Play</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3><i data-lucide="leaf"></i> Freshlist</h3>
+                    <p>The smart, minimal grocery companion for modern life.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#testimonials">Reviews</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Freshlist. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add subtle parallax effect to hero mockup
+        window.addEventListener('scroll', () => {
+            const mockup = document.querySelector('.phone-mockup');
+            if (mockup) {
+                const scrolled = window.pageYOffset;
+                mockup.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
